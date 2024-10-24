@@ -102,6 +102,9 @@ int main(void)
 	OLED_Init();									// 初始化OLED屏幕
 	OLED_Clear();									// 清空OLED缓存
 	OLED_ShowString(1, 1, "MrWei95", OLED_8X16);
+	OLED_ShowChinese(0, 18, "哔哩哔哩主页：");
+	OLED_ShowString	(0, 36, "space.bilibili.com/", OLED_6X8);
+	OLED_ShowString	(0, 45, "2004315025", OLED_6X8);
 	OLED_Update();									// 将缓存更新至OLED屏幕
 
   /* USER CODE END 2 */
