@@ -9,3 +9,5 @@
   * 如果发现任何漏洞或者笔误，欢迎通过邮件向我反馈：mrwei95@outlook.com
 ### 汉字取模示例
 <img src="/Documents/汉字取模.png" class="" title="汉字取模" >
+### 图片取模示例
+<img src="/Documents/图片取模.png" class="" title="图片取模" >
