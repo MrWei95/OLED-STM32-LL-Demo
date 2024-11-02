@@ -7,3 +7,5 @@
   * 程序版权归原作者所有，任何人或组织不得将其据为己有
   * 部分代码由STM32CubeMX生成
   * 如果发现任何漏洞或者笔误，欢迎通过邮件向我反馈：mrwei95@outlook.com
+### 汉字取模示例
+<img src="/Documents/汉字取模.png" class="" title="汉字取模" >
