@@ -1,4 +1,4 @@
-# LL Liberary OLED Demo
+# 0.96寸OLED的LL库Demo
   * 本工程由MrWei95创建、修改并免费开源共享
   * 你可以任意查看、使用和修改，并应用到自己的项目之中
   * OLED驱动移植自[江协科技](https://jiangxiekeji.com/)
