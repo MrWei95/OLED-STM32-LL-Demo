@@ -1,0 +1,16 @@
+project\oled.o: ..\Hardware\OLED.c
+project\oled.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_i2c.h
+project\oled.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h
+project\oled.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103xb.h
+project\oled.o: ../Drivers/CMSIS/Include/core_cm3.h
+project\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+project\oled.o: ../Drivers/CMSIS/Include/cmsis_version.h
+project\oled.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+project\oled.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+project\oled.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
+project\oled.o: ..\Hardware\OLED.h
+project\oled.o: ..\Hardware\OLED_Data.h
+project\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+project\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+project\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+project\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

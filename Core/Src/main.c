@@ -1,19 +1,16 @@
 /* USER CODE BEGIN Header */
-/***************************************************************************************
-	* 本程序由MrWei95创建并免费开源共享
-	* 你可以任意查看、使用和修改，并应用到自己的项目之中
-	* 你可以修改本注释，请保留原作者信息
+
+/**** 本程序由MrWei95创建并免费开源共享
+	* 你可以任意查看、使用和修改，并应用到自己的项目之中，请保留原作者信息
 	* 程序版权归MrWei95所有，任何人或组织不得将其据为己有
 	* 部分代码由STM32CubeMX生成
 	* 
 	* 程序名称：				main.c
 	* 程序创建时间：			2024.10.24
-	* 当前程序版本：			V1.0
-	* 当前版本发布时间：		2024.10.24
-	* 
-	* 如果发现任何漏洞或者笔误，欢迎通过邮件向我反馈：mrwei95@outlook.com
-	***************************************************************************************
+	* 当前程序版本：			V1.1
+	* 当前版本发布时间：		2025.03.24
 	*/
+
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -22,6 +19,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include "OLED.H"
 
 /* USER CODE END Includes */
 
@@ -99,13 +98,14 @@ int main(void)
   MX_GPIO_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-	OLED_Init();									// 初始化OLED屏幕
-	OLED_Clear();									// 清空OLED缓存
+
+	OLED_Init();
+	
 	OLED_ShowString	(0,	0,	"MrWei95", OLED_8X16);
 	OLED_ShowChinese(0,	17,	"哔哩哔哩主页：");
 	OLED_ShowString	(0,	36,	"space.bilibili.com/", OLED_6X8);
 	OLED_ShowString	(0,	45,	"2004315025", OLED_6X8);
-	OLED_Update();									// 将缓存更新至OLED屏幕
+	OLED_Update();
 
   /* USER CODE END 2 */
 
