@@ -1,9 +1,0 @@
-project\delay.o: ..\System\Delay.c
-project\delay.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include\stm32f10x.h
-project\delay.o: .\RTE\_Project\RTE_Components.h
-project\delay.o: ../Drivers/CMSIS/Include/core_cm3.h
-project\delay.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-project\delay.o: ../Drivers/CMSIS/Include/cmsis_version.h
-project\delay.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
-project\delay.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
-project\delay.o: C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include\system_stm32f10x.h

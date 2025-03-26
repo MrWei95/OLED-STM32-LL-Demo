@@ -75,4 +75,39 @@ void MX_I2C1_Init(void)
 
 /* USER CODE BEGIN 1 */
 
+/**** 
+	* 函    数：查询IIC总线事件
+	* 参    数：I2Cx：IIC端口
+	*			I2C_EVENT：IIC事件
+	* 说    明：无
+	*/
+uint8_t I2C_CheckEvent(I2C_TypeDef* I2Cx, uint32_t I2C_EVENT)
+{
+	uint32_t lastevent = 0;
+	uint32_t flag1 = 0, flag2 = 0;
+	uint8_t status = 0;
+	
+	/* 读取 I2Cx 状态寄存器 */
+	flag1 = I2Cx->SR1;
+	flag2 = I2Cx->SR2;
+	flag2 = flag2 << 16;
+	
+	/* 从 I2C 状态寄存器获取最后一个事件值 */
+	lastevent = (flag1 | flag2) & ((uint32_t)0x00FFFFFF);
+	
+	/* 检查最后一个事件是否包含 I2C_EVENT */
+	if ((lastevent & I2C_EVENT) == I2C_EVENT)
+	{
+		/* SUCCESS: 最后一个事件等于 I2C_EVENT */
+		status = 1;
+	}
+	else
+	{
+		/* ERROR: 最后一个事件与 I2C_EVENT 不同 */
+		status = 0;
+	}
+	/* 返回状态status */
+	return status;
+}
+
 /* USER CODE END 1 */

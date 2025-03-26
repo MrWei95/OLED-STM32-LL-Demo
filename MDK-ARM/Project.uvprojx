@@ -408,28 +408,33 @@
             <File>
               <FileName>OLED.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Hardware\OLED.c</FilePath>
+              <FilePath>..\Hardware\OLED\OLED.c</FilePath>
             </File>
             <File>
               <FileName>OLED.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Hardware\OLED.h</FilePath>
+              <FilePath>..\Hardware\OLED\OLED.h</FilePath>
             </File>
             <File>
               <FileName>OLED_Data.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Hardware\OLED_Data.c</FilePath>
+              <FilePath>..\Hardware\OLED\OLED_Data.c</FilePath>
             </File>
             <File>
               <FileName>OLED_Data.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\Hardware\OLED_Data.h</FilePath>
+              <FilePath>..\Hardware\OLED\OLED_Data.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Application/User/Core</GroupName>
           <Files>
+            <File>
+              <FileName>main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Core\Inc\main.h</FilePath>
+            </File>
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
@@ -449,11 +454,6 @@
               <FileName>stm32f1xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f1xx_it.c</FilePath>
-            </File>
-            <File>
-              <FileName>main.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Core\Inc\main.h</FilePath>
             </File>
           </Files>
         </Group>
