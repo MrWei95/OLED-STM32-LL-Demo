@@ -1,8 +1,6 @@
 # 0.96寸OLED的LL库Demo
 ## 说明
-  * 本工程由[MrWei95](https://github.com/MrWei95)开源共享
-  * 文本编码使用UTF-8
-  * 若OLED需要正确显示中文，请确保**OLED_Data.c**的编码为UTF-8！
+  * 文本编码使用UTF-8，若OLED需要正确显示中文，请确保**OLED_Data.c**的编码为UTF-8！
   * OLED驱动移植自[江协科技](https://jiangxiekeji.com/)，通讯使用硬件IIC。
   * 示例工程由STM32CubeMX生成。
   * 请在编译器中使用```--no-multibyte-chars```，让编译器假定所有的字符常量和字符串字面量都使用单字节字符集，而不会自动转换成多字节字符，有助于避免与 UTF-8 编码混用时出现的错误。示例工程已使用。
