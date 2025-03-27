@@ -2,74 +2,66 @@
 ## 说明
   * 本工程由[MrWei95](https://github.com/MrWei95)开源共享
   * 文本编码使用UTF-8
-  * OLED驱动移植自[江协科技](https://jiangxiekeji.com/)，驱动使用硬件IIC
-  * 工程由STM32CubeMX生成
+  * 若OLED需要正确显示中文，请确保**OLED_Data.c**的编码为UTF-8！
+  * OLED驱动移植自[江协科技](https://jiangxiekeji.com/)，通讯使用硬件IIC。
+  * 示例工程由STM32CubeMX生成。
+  * 请在编译器中使用```--no-multibyte-chars```，让编译器假定所有的字符常量和字符串字面量都使用单字节字符集，而不会自动转换成多字节字符，有助于避免与 UTF-8 编码混用时出现的错误。示例工程已使用。
 
-## LL库IIC实现
+## LL库硬件IIC实现
+必要的宏定义：
 ```C
-/**
-	* 函    数：OLED写命令，向SSD1306写入一字节命令
-	* 参    数：cmd：需要发送的命令
-	* 说    明：用于OLED屏幕的IIC通讯
-	*/
-void OLED_WR_Cmd(uint8_t cmd)
-{
-	uint32_t timeout = 0;
-	
-	while(LL_I2C_IsActiveFlag_BUSY(I2C1));										// 判断总线是否忙碌
-	
-	LL_I2C_GenerateStartCondition(I2C1);								
-	while(!I2C_CheckEvent(I2C1,I2C_EVENT_MASTER_MODE_SELECT))					// 读SR1->SB位，判断起始位是否发送
-		{if (++timeout > TIMEOUT_MAX) return;}									// 超时退出
-	
-	LL_I2C_TransmitData8(I2C1,0x78);											// 发送地址
-	while(!I2C_CheckEvent(I2C1,I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED))		// 等待EV6完成；读SR1、SR2
-		{if (++timeout > TIMEOUT_MAX) return;}									// 超时退出
-	
-	LL_I2C_TransmitData8(I2C1,0x00);											// 发送命令
-	while(!I2C_CheckEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED))
-		{if (++timeout > TIMEOUT_MAX) return;}									// 超时退出
-	
-	LL_I2C_TransmitData8(I2C1,cmd);												// 发送数据
-	while(!I2C_CheckEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED))
-		{if (++timeout > TIMEOUT_MAX) return;}									// 超时退出
-	
-	LL_I2C_GenerateStopCondition(I2C1);							
-}
+/*IIC 事件*/
+/* --EV5 : 起始位已发送...*/
+#define  I2C_EVENT_MASTER_MODE_SELECT                      ((uint32_t)0x00030001)  /* BUSY, MSL and SB flag */
+/* --EV6 : 发送/接收完成...*/
+#define  I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED        ((uint32_t)0x00070082)  /* 发送 BUSY, MSL, ADDR, TXE and TRA flags */
+#define  I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED           ((uint32_t)0x00030002)  /* 接收 BUSY, MSL and ADDR flags */
+/* Master RECEIVER mode -----------------------------*/ 
+/* --EV7 */
+#define  I2C_EVENT_MASTER_BYTE_RECEIVED                    ((uint32_t)0x00030040)  /* BUSY, MSL and RXNE flags */
+/* Master TRANSMITTER mode --------------------------*/
+/* --EV8 */
+#define I2C_EVENT_MASTER_BYTE_TRANSMITTING                 ((uint32_t)0x00070080) /* TRA, BUSY, MSL, TXE flags */
+/* --EV8_2 */
+#define  I2C_EVENT_MASTER_BYTE_TRANSMITTED                 ((uint32_t)0x00070084)  /* TRA, BUSY, MSL, TXE and BTF flags */
 
+#define TIMEOUT_MAX 10000  // 超时计数
+```
+必要的查询总线函数示例：
+```C
 /**** 
-	* 函    数：OLED写数据，向SSD1306写入数据
-	* 参    数：dat：需要发送的数据
-	*			len：数据长度
-	* 说    明：用于OLED屏幕的IIC通讯
+	* 函    数：查询IIC总线事件
+	* 参    数：I2Cx：IIC端口
+	*			I2C_EVENT：IIC事件
+	* 说    明：无
 	*/
-void OLED_WR_Data(uint8_t *dat,uint8_t len)
+uint8_t I2C_CheckEvent(I2C_TypeDef* I2Cx, uint32_t I2C_EVENT)
 {
-	uint32_t timeout = 0;
+	uint32_t lastevent = 0;
+	uint32_t flag1 = 0, flag2 = 0;
+	uint8_t status = 0;
 	
-	while(LL_I2C_IsActiveFlag_BUSY(I2C1));										// 判断总线是否忙碌
+	/* 读取 I2Cx 状态寄存器 */
+	flag1 = I2Cx->SR1;
+	flag2 = I2Cx->SR2;
+	flag2 = flag2 << 16;
 	
-	LL_I2C_GenerateStartCondition(I2C1);								
-	while(!I2C_CheckEvent(I2C1,I2C_EVENT_MASTER_MODE_SELECT))					// 读SR1->SB位，判断起始位是否发送
-		{if (++timeout > TIMEOUT_MAX) return;}									// 超时退出
+	/* 从 I2C 状态寄存器获取最后一个事件值 */
+	lastevent = (flag1 | flag2) & ((uint32_t)0x00FFFFFF);
 	
-	LL_I2C_TransmitData8(I2C1,0x78);//发送地址
-	while(!I2C_CheckEvent(I2C1,I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED))		// 等待EV6完成；读SR1、SR2
-		{if (++timeout > TIMEOUT_MAX) return;}									// 超时退出
-	
-	LL_I2C_TransmitData8(I2C1,0x40);											// 发送数据
-	while(!I2C_CheckEvent(I2C1,I2C_EVENT_MASTER_BYTE_TRANSMITTED))
-		{if (++timeout > TIMEOUT_MAX) return;}									// 超时退出
-	
-	// 循环发送数据
-	for (uint8_t i = 0; i < len; i++)
+	/* 检查最后一个事件是否包含 I2C_EVENT */
+	if ((lastevent & I2C_EVENT) == I2C_EVENT)
 	{
-		LL_I2C_TransmitData8(I2C1, dat[i]);										// 发送当前字节
-		while(!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED))			// 等待字节发送完成
-			{if (++timeout > TIMEOUT_MAX) return;}								// 超时退出
+		/* SUCCESS: 最后一个事件等于 I2C_EVENT */
+		status = 1;
 	}
-	
-	LL_I2C_GenerateStopCondition(I2C1);							
+	else
+	{
+		/* ERROR: 最后一个事件与 I2C_EVENT 不同 */
+		status = 0;
+	}
+	/* 返回状态status */
+	return status;
 }
 ```
 
