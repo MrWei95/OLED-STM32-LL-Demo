@@ -1,4 +1,4 @@
-# 0.96寸OLED的LL库Demo
+# SD1306 0.96 OLED屏 STM32 LL库Driver
 ## 说明
   * 文本编码使用UTF-8，若OLED需要正确显示中文，请确保**OLED_Data.c**的编码为UTF-8！
   * OLED驱动移植自[江协科技](https://jiangxiekeji.com/)，通讯使用硬件IIC。
